@@ -26,9 +26,11 @@ class LiteVimeo extends HTMLElement {
         // https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#rule-2---attribute-escape-before-inserting-untrusted-data-into-html-common-attributes
         this.videoId = encodeURIComponent(this.getAttribute('videoid'));
 
-        const thumbnailUrl = await this._getThumbnailURL()
 
-        this.style.backgroundImage = `url("${thumbnailUrl}")`;
+        if (!this.style.backgroundImage) {
+            const thumbnailUrl = await this._getThumbnailURL()
+            this.style.backgroundImage = `url("${thumbnailUrl}")`;
+        }
 
         const playBtn = document.createElement('button');
         playBtn.type = 'button';
